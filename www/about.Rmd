@@ -1,0 +1,58 @@
+---
+title : "About"
+author: "Walid Ghariani"
+date: "20/09/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Framework
+
+The app was developed as a final project for the scientific Graphics Course  [04-GEO-SOS1](http://eagle-science.org/project/scientific-graphics/), which is one of the courses that I took during the second semester of my [MSc. in Applied Earth Observation and Geoanalysis (EAGLE)](http://eagle-science.org/) at [JMU Wuerzburg](https://www.uni-wuerzburg.de/en/home/).
+
+This application is governed by the
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0)
+
+You can use, modify and/or redistribute these codes under the terms of the GPL v3 license
+This Shiny application requires the following packages: 
+
+  - Shiny, Chang et al. (2020)
+  - shinydashboard, Chang et al. (2018)
+  - shinycssloaders, 	Andras Sali et al. (2020)
+  - leaflet, Joe Cheng et al. (2019)
+  - leaflet.extras, Bhaskar Karambelkar et al. (2018)
+  - ggplot2, Hadley Wickham et al. (2020)
+  - dplyr, Hadley Wickham et al. (2020)
+  - plyr, Hadley Wickham (2020)
+  - tidyquant, Matt Dancho and Davis Vaughan (2020)
+  
+## Contact:
+
+  - Walid Ghariani: EAGLE MSc. Student: 
+walid.ghariani@stud-mail.uni-wuerzburg.de [LinkedIn](https://www.linkedin.com/in/walid-ghariani-893365138/) [GitHub](https://github.com/WalidGharianiEAGLE).
+
+
+
+### References:
+
+Chang et al.  2020. Shiny: Web Application Framework for R. <https://cran.r-project.org/web/packages/shiny/index.html>.
+
+Chang et al. 2018. Shinydashboard: Create Dashboards with 'Shiny'. <https://cran.r-project.org/web/packages/shinydashboard/index.html>.
+
+Andras Sali et al. 2020. shinycssloaders: Add Loading Animations to a 'shiny' Output While It's Recalculating. <https://cran.r-project.org/web/packages/shinycssloaders/index.html>.
+
+Joe Cheng et al. 2019. leaflet: Create Interactive Web Maps with the JavaScript 'Leaflet' Library. <https://cran.r-project.org/web/packages/leaflet/index.html>.
+
+Bhaskar Karambelkar et al. 2018. leaflet.extras: Extra Functionality for 'leaflet' Package. <https://cran.r-project.org/web/packages/leaflet.extras/index.html>.
+
+Hadley Wickham et al. 2020. ggplot2: Create Elegant Data Visualisations Using the Grammar of Graphics.
+<https://cran.r-project.org/web/packages/ggplot2/index.html>.
+
+Hadley Wickham et al. 2020. dplyr: A Grammar of Data Manipulation. <https://cran.r-project.org/web/packages/dplyr/index.html>.
+
+Hadley Wickham et al. 2020. plyr: Tools for Splitting, Applying and Combining Data. <https://cran.r-project.org/web/packages/plyr/index.html>.
+
+Matt Dancho and Davis Vaughan. 2020. tidyquant: Tidy Quantitative Financial Analysis.
+<https://cran.r-project.org/web/packages/tidyquant/index.html>
