@@ -9,7 +9,7 @@
 #
 # Processing    : Arrange the data, Create Functions and Deploy the R shiny app 
 #
-# Output        : Australian Bushfire 2019-2019 R Shiny App
+# Output        : Australian Bushfire 2019-2020 R Shiny App
 ##########################################################################################################################################################################################################################
 list.of.packages <- c("ggplot2", "dplyr", "plyr", "tidyquant", 
                       "shiny","shinydashboard","shinycssloaders","leaflet","leaflet.extras")
