@@ -180,21 +180,22 @@ viz_TS <- function(Sat_VIZ, Var){
   
   VIZ_2 <- ggplot(Sat_VIZ, aes(Week_Month, Day, fill = Var)) + 
     geom_tile(colour = "white") + facet_grid(year(Sat_VIZ$acq_Date)~Month) +
-    labs(x="Week of Month", y = "")+
-    theme(plot.title = element_text(face="bold", size = 16),
-          axis.title.x = element_text(size=14),
+    labs(x="Week of Month", y = "", caption = "Data source: https://firms.modaps.eosdis.nasa.gov")+
+    theme(plot.title = element_text(face="bold"),
+          axis.title.x = element_text(size=14, face = "bold"),
+          plot.caption = element_text(face = "italic",size=10),
           legend.position="bottom")
   
   if (Var == Sat_VIZ$Mean_FRP){
     return(VIZ_2+
              scale_fill_gradient(low="#FFFFFF", high="#FF0000")+
-             ggtitle("Time Series Calendar Heatmap: The daily Mean Fire Radiative Power (MW)")+
+             ggtitle("Time Series Calendar Heatmap:\nThe daily Mean Fire Radiative Power (MW)")+
              labs(fill = "FPR (MW)"))
   }
   else (
     return(VIZ_2+
              scale_fill_gradient(low="#FFFF80", high="#FF0000")+
-             ggtitle("Time Series Calendar Heatmap: The daily Mean Brightness Temperature (c\u00B0)")+
+             ggtitle("Time Series Calendar Heatmap:\nThe daily Mean Brightness Temperature (c\u00B0)")+
              labs(fill = " BT (c\u00B0)"))
   )
 }
@@ -204,10 +205,11 @@ viz_SP<- function(Sat_sp, Var_sp){
   
   VIZ_3 <- ggplot(Sat_sp,aes(acq_Date, Var_sp))+
     scale_x_date(date_labels = "%m-%Y",date_minor_breaks = "1 month")+
-    xlab("Date")+
+    labs(x = "Date",caption = "Data source: https://firms.modaps.eosdis.nasa.gov")+
     theme(plot.title = element_text(face="bold", size = 16, hjust = 0.5),
           axis.title.x = element_text(size=12),
-          axis.title.y = element_text(size=12))+
+          axis.title.y = element_text(size=12),
+          plot.caption = element_text(face = "italic"))+
     expand_limits(y = 0)
   
   if (Var_sp == Sat_sp$Mean_FRP){
@@ -283,7 +285,8 @@ ui <-
                                         "Brightness Temperature" = "BT_2")),
                          radioButtons(inputId = "plot", label = "Select Plot Format",
                                       c("Calendar Heat Map" = "CHM"
-                                        ,"Scatter Plot" = "SP"))
+                                        ,"Scatter Plot" = "SP")),
+                         downloadButton('download', 'Download')
                     ),
                     box(title = "Plot",status = "warning",solidHeader = TRUE,collapsible = TRUE,background = "black",width =8,height = 600,
                         plotOutput(outputId="TSA_1",height="400px") %>% 
@@ -332,7 +335,7 @@ server <- function(input, output) {
     Viirs_NOAA <- inst_sat_option(VIIRS_NOAA_20)
     
     # Funciotn to VIZ the data according to the input
-    if(input$VAR == "FRP_1" & input$SAT == "MODIS"){
+    if(input$VAR == "FRP_1" & input$SAT == "MODIS" ){
       Data_VIZ(Modis_c6 , Modis_c6$frp, pal_FRP, label_FRP(Modis_c6))
     }
     else if (input$VAR == "FRP_1" & input$SAT == "VIIRS_SNPP"){
@@ -406,8 +409,63 @@ server <- function(input, output) {
       viz_SP(VIIRS_NOAA_20_TS, VIIRS_NOAA_20_TS$mean_BT)
     }
   }, height=540)
-  
-  
+  #download files
+  output$download <- downloadHandler(
+    filename = function() {paste("Australian Bushfire", '.pdf', sep='') },
+    content = function(file) {
+      # Time-Series Analysis with a Calendar Heatmap format 
+      if (input$Variable == "FRP_2" & input$inst_sat == "MODIS" & input$plot == "CHM"){
+        viz_TS(MODIS_C6_TS,MODIS_C6_TS$Mean_FRP)
+        ggsave(file, plot = viz_TS(MODIS_C6_TS,MODIS_C6_TS$Mean_FRP), device = "pdf")
+      }
+      else if (input$Variable == "FRP_2" & input$inst_sat == "VIIRS_SNPP" & input$plot == "CHM"){
+        viz_TS(VIIRS_SNPP_TS,VIIRS_SNPP_TS$Mean_FRP)    
+        ggsave(file, plot = viz_TS(VIIRS_SNPP_TS,VIIRS_SNPP_TS$Mean_FRP), device = "pdf")
+      }
+      else if (input$Variable == "FRP_2" & input$inst_sat == "VIIRS_NOAA" & input$plot == "CHM"){
+        viz_TS(VIIRS_NOAA_20_TS, VIIRS_NOAA_20_TS$Mean_FRP)
+        ggsave(file, plot = viz_TS(VIIRS_NOAA_20_TS, VIIRS_NOAA_20_TS$Mean_FRP), device = "pdf")
+      }
+      #
+      else if (input$Variable == "BT_2" & input$inst_sat == "MODIS" & input$plot == "CHM"){
+        viz_TS(MODIS_C6_TS, MODIS_C6_TS$mean_BT)
+        ggsave(file, plot = viz_TS(MODIS_C6_TS, MODIS_C6_TS$mean_BT), device = "pdf")
+      }
+      else if (input$Variable == "BT_2" & input$inst_sat == "VIIRS_SNPP" & input$plot == "CHM"){
+        viz_TS(VIIRS_SNPP_TS, VIIRS_SNPP_TS$mean_BT)   
+        ggsave(file, plot = viz_TS(VIIRS_SNPP_TS, VIIRS_SNPP_TS$mean_BT) , device = "pdf")
+      }
+      else if (input$Variable == "BT_2" & input$inst_sat == "VIIRS_NOAA" & input$plot == "CHM"){
+        viz_TS(VIIRS_NOAA_20_TS, VIIRS_NOAA_20_TS$mean_BT)
+        ggsave(file, plot = viz_TS(VIIRS_NOAA_20_TS, VIIRS_NOAA_20_TS$mean_BT) , device = "pdf")
+      }
+      # Time-Series Analysis with a Scatter plot format 
+      else if (input$Variable == "FRP_2" & input$inst_sat == "MODIS" & input$plot == "SP"){
+        viz_SP(MODIS_C6_TS,MODIS_C6_TS$Mean_FRP)
+        ggsave(file, plot = viz_SP(MODIS_C6_TS,MODIS_C6_TS$Mean_FRP) , device = "pdf")
+      }
+      else if (input$Variable == "FRP_2" & input$inst_sat == "VIIRS_SNPP" & input$plot == "SP"){
+        viz_SP(VIIRS_SNPP_TS,VIIRS_SNPP_TS$Mean_FRP)   
+        ggsave(file, plot =  viz_SP(VIIRS_SNPP_TS,VIIRS_SNPP_TS$Mean_FRP)   , device = "pdf")
+      }
+      else if (input$Variable == "FRP_2" & input$inst_sat == "VIIRS_NOAA" & input$plot == "SP"){
+        viz_SP(VIIRS_NOAA_20_TS, VIIRS_NOAA_20_TS$Mean_FRP)
+        ggsave(file, plot =  viz_SP(VIIRS_NOAA_20_TS, VIIRS_NOAA_20_TS$Mean_FRP)  , device = "pdf")
+      }
+      #
+      else if (input$Variable == "BT_2" & input$inst_sat == "MODIS" & input$plot == "SP"){
+        viz_SP(MODIS_C6_TS, MODIS_C6_TS$mean_BT)
+        ggsave(file, plot =  viz_SP(MODIS_C6_TS, MODIS_C6_TS$mean_BT)  , device = "pdf")
+      }
+      else if (input$Variable == "BT_2" & input$inst_sat == "VIIRS_SNPP" & input$plot == "SP"){
+        viz_SP(VIIRS_SNPP_TS, VIIRS_SNPP_TS$mean_BT)   
+        ggsave(file, plot =  viz_SP(VIIRS_SNPP_TS, VIIRS_SNPP_TS$mean_BT)   , device = "pdf")
+      }
+      else if (input$Variable == "BT_2" & input$inst_sat == "VIIRS_NOAA" & input$plot == "SP"){
+        viz_SP(VIIRS_NOAA_20_TS, VIIRS_NOAA_20_TS$mean_BT)
+        ggsave(file, plot =  viz_SP(VIIRS_NOAA_20_TS, VIIRS_NOAA_20_TS$mean_BT)   , device = "pdf")
+      }
+    })
 }
 
 shinyApp(ui = ui, server = server)
