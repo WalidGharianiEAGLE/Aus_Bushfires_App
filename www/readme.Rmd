@@ -24,7 +24,7 @@ From September 2019 to March 2020, fires heavily impacted various regions of the
 #### Environmental effects
 
 In mid-December 2019, a NASA analysis revealed that since 1 August, the New South Wales and Queensland bushfires had emitted 250 million tonnes (280 million short tons) of carbon dioxide (CO2). As of 2 January 2020, NASA estimated that 306 million tonnes (337 million short tons) of CO2 had been emitted. By comparison, in 2018, Australia's total carbon emissions were equivalent to 535 million tonnes (590 million short tons) of CO2. While the carbon emitted by the fires would normally be reabsorbed by forest regrowth, this would take decades and might not happen at all if prolonged drought has damaged the ability of forests to fully regrow.
-CO emitted by 2019–20 south-east bushfire captured by NASA Aqua AIRS instrument.
+CO emitted by 2019-20 south-east bushfire captured by NASA Aqua AIRS instrument.
 
 <div align="center">
 <img src="CO_2019-12-01-2020-01-02-Aqua-AIRS-CO-DAY-NIGHT-COMPOSITE.gif" align="middle" width=640 height=432/>
